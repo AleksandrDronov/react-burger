@@ -1,0 +1,35 @@
+.section {
+  width: 600px;
+}
+
+.box {
+  height: calc(100vh - 337px);
+  overflow-y: auto;
+}
+
+.box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.box::-webkit-scrollbar-thumb {
+  border-radius: 0;
+  background: #8585AD;
+}
+
+.box::-webkit-scrollbar-track {
+  border-radius: 0;
+  background: #2F2F37;
+}
+
+.buns {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  column-gap: 24px;
+  margin-left: 16px;
+  margin-right: 8px;
+}
+
+.souses {
+  composes: buns;
+  row-gap: 32px;
+}
