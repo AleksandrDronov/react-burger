@@ -1,0 +1,51 @@
+.section {
+  width: 600px;
+  margin: 100px 0 0 40px;
+}
+
+.upBun {
+  padding-left: 48px;
+  padding-bottom: 16px;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: calc(100vh - 520px);
+  max-height: 464px;
+  overflow-y: scroll;
+}
+
+.box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.box::-webkit-scrollbar-thumb {
+  border-radius: 0;
+  background: #8585AD;
+}
+
+.box::-webkit-scrollbar-track {
+  border-radius: 0;
+  background: #2F2F37;
+}
+
+.filling {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.downBun {
+  padding-left: 48px;
+  padding-top: 16px;
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 40px;
+  padding-right: 16px;
+}

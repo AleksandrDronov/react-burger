@@ -1,0 +1,29 @@
+.header {
+  min-height: 88px;
+  background: #1C1C21;
+}
+
+.nav_links {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.nav_burger {
+  display: flex;
+  align-items: center;
+  padding: 0 20px 0 20px;
+}
+
+.nav_list {
+  composes: nav_burger;
+  padding: 0 130px 0 20px;
+  color: #8585AD;
+}
+
+.nav_account {
+  composes: nav_list;
+  padding: 0 20px 0 310px;
+}
