@@ -5,6 +5,7 @@ import { Box } from '@ya.praktikum/react-developer-burger-ui-components';
 import Menu from '../menu/menu';
 import Card from '../card/card';
 import burger from './burgerIngredients.module.css'
+import ingredientType from '../../utils/type';
 
 class BurgerIngredients extends React.Component {
 
@@ -38,23 +39,9 @@ class BurgerIngredients extends React.Component {
   }
 };
 
-const dataPropTypes = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  proteins: PropTypes.number,
-  fat: PropTypes.number,
-  carbohydrates: PropTypes.number,
-  calories: PropTypes.number,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  image_mobile: PropTypes.string,
-  image_large: PropTypes.string,
-  __v: PropTypes.number,
-});
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(dataPropTypes.isRequired)
+  data: PropTypes.arrayOf(ingredientType.isRequired).isRequired
 };
 
 

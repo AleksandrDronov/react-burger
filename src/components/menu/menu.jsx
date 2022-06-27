@@ -1,11 +1,12 @@
 import React from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import menu from './menu.module.css'
 
 class Menu extends React.Component {
   render() {
     // const [current, setCurrent] = React.useState('one')
     return (
-      <div style={{ display: 'flex' }} className="mb-10">
+      <div className={menu.menu}>
         <Tab value="one" active={true} >
           Булки
         </Tab>

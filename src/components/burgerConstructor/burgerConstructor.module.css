@@ -3,6 +3,11 @@
   margin: 100px 0 0 40px;
 }
 
+.upBun {
+  padding-left: 48px;
+  padding-bottom: 16px;
+}
+
 .box {
   display: flex;
   flex-direction: column;
@@ -26,3 +31,21 @@
   background: #2F2F37;
 }
 
+.filling {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.downBun {
+  padding-left: 48px;
+  padding-top: 16px;
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 40px;
+  padding-right: 16px;
+}

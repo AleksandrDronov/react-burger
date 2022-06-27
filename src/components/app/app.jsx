@@ -4,6 +4,7 @@ import Header from '../header/header.jsx';
 import BurgerIngredients from '../burgerIngredients/burgerIngredients';
 import BurgerConstructor from '../burgerConstructor/burgerConstructor'
 import data from '../../utils/data.js'
+import main from './app.module.css'
 
 class App extends React.Component {
 
@@ -13,7 +14,7 @@ class App extends React.Component {
     return (
       <>
         <Header />
-        <main style={{display: 'flex', justifyContent: 'center'}}>
+        <main className={main.app}>
           <BurgerIngredients data={this.state.data} />
           <BurgerConstructor data={this.state.data} />
         </main>

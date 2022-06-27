@@ -1,4 +1,5 @@
-.App {
-  text-align: center;
+.app {
+  display: flex;
+  justify-content: center;
 }
 
