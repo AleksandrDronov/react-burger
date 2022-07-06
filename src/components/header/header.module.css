@@ -20,7 +20,6 @@
 .nav_list {
   composes: nav_burger;
   padding: 0 130px 0 20px;
-  color: #8585AD;
 }
 
 .nav_account {

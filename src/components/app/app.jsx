@@ -1,26 +1,41 @@
 import React from 'react';
-import './app.module.css';
 import Header from '../header/header.jsx';
-import BurgerIngredients from '../burgerIngredients/burgerIngredients';
-import BurgerConstructor from '../burgerConstructor/burgerConstructor'
-import data from '../../utils/data.js'
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-сonstructor/burger-сonstructor'
 import main from './app.module.css'
 
-class App extends React.Component {
+const url = 'https://norma.nomoreparties.space/api/ingredients';
 
-  state = { data };
+function App () {
+  const [state, setState] = React.useState({
+    success: false,
+    data: []
+  })
 
-  render() {
-    return (
-      <>
-        <Header />
-        <main className={main.app}>
-          <BurgerIngredients data={this.state.data} />
-          <BurgerConstructor data={this.state.data} />
-        </main>
-      </>
-    );
-  }
+  React.useEffect(() => {
+    const getData = async () => {
+      const res = await fetch(url);
+      if(res.ok) {
+        const data = await res.json();
+        setState(data);
+      } else {
+        console.log(`Ошибка: ${res.status}`)
+      }
+    };
+    getData()
+  },[]);
+
+  const { success, data } = state;
+
+  return (
+    <>
+      <Header />
+      <main className={main.app}>
+        { data.length && success && <BurgerIngredients data={data} />}
+        { data.length && success && <BurgerConstructor data={data} />}
+      </main>
+    </>
+  );
 };
 
 export default App;
