@@ -1,0 +1,19 @@
+.image {
+display: block;
+margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

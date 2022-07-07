@@ -1,0 +1,27 @@
+.popup {
+  width: 720px;
+  background-color: #1C1C21;;
+  border-radius: 40px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.toggle {
+  background-color: transparent;
+  background-image: url(../../images/Vector.png);
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  height: 18px;
+  width: 18px;
+  position: absolute;
+  right: 40px;
+  top: 55px;
+  transition: opacity .4s;
+}
+
+.toggle:hover {
+  opacity: 0.5;
+}
