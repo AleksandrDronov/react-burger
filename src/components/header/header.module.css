@@ -6,15 +6,20 @@
 .nav_links {
   display: flex;
   justify-content: center;
+  align-items: center;
   list-style: none;
   margin: 0 auto;
   padding: 0;
 }
 
 .nav_burger {
-  display: flex;
-  align-items: center;
   padding: 0 20px 0 20px;
+}
+
+.nav_link {
+  display: flex;
+  text-decoration: none;
+  color: #F2F2F3;
 }
 
 .nav_list {

@@ -12,16 +12,14 @@ import OrderDetails from '../order-details/order-details';
 
 function BurgerConstructor ({ data }) {
 
-  const [state, setState] = React.useState({
-    visible: false
-  });
+  const [isModalOpen, setModalOpen] = React.useState(false);
 
   const handleOpenModal = () => {
-    setState({ visible: true });
+    setModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setState({ visible: false });
+    setModalOpen(false);
   }
 
   return(
@@ -61,11 +59,10 @@ function BurgerConstructor ({ data }) {
         <p className="text text_type_digits-medium">630</p>
         <img src={image3} alt="" className='pr-10 pl-2'/>
         <Button type="primary" size="large" onClick={handleOpenModal}>Оформить заказ</Button>
-        {state.visible &&
+        {isModalOpen &&
         <Modal onClose={handleCloseModal}>
           <OrderDetails/>
         </Modal>
-
           }
       </div>
     </section>

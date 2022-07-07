@@ -12,16 +12,14 @@ import ingredientType from '../../utils/type';
 
 function Card (props) {
 
-  const [state, setState] = React.useState({
-    visible: false
-  });
+  const [isModalOpen, setModalOpen] = React.useState(false);
 
   const handleOpenModal = () => {
-    setState({ visible: true });
+    setModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setState({ visible: false });
+    setModalOpen(false);
   }
 
   return(
@@ -33,7 +31,7 @@ function Card (props) {
       </div>
       <h4 className={`${card.name} text text_type_main-default`}>{props.name}</h4>
       <Counter count={1} size="default" />
-      {state.visible &&
+      {isModalOpen &&
       <Modal onClose={handleCloseModal}>
         <IngredientDetails card={props}/>
       </Modal>
