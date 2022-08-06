@@ -1,67 +1,106 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import React, { useState } from 'react';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import burger from './burger-сonstructor.module.css'
-import image3 from '../../images/Subtract.png'
-import ingredientType from '../../utils/type';
+import burger from './burger-сonstructor.module.css';
+import image3 from '../../images/Subtract.png';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
+import ElementConstructor from '../constructor-element/constructor-element';
+import { useSelector, useDispatch } from 'react-redux';
+import { UPDATE_TYPE, DELET_INGREDIENT, INCREASE_INGREDIENT, CHANGE_INGREDIENT_BUN, getOrderDetails } from '../../services/actions/ingredients';
+import { useDrop } from "react-dnd";
 
 
-function BurgerConstructor ({ data }) {
+export default function BurgerConstructor () {
 
-  const [isModalOpen, setModalOpen] = React.useState(false);
+  const { ingredientsInConstructor } = useSelector(store => store.ingredients);
+  const { orderDetals } = useSelector(store => store.ingredients);
+
+  const dispatch = useDispatch();
+
+  const allIdIngredients = ingredientsInConstructor.map(item => item._id);
+
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(itemId) {
+      if(itemId.typeIng === "bun") {
+        dispatch({
+        type: CHANGE_INGREDIENT_BUN,
+        ...itemId,
+        });
+      } else {
+        dispatch({
+          type: UPDATE_TYPE,
+          ...itemId,
+        });
+        dispatch({
+          type: INCREASE_INGREDIENT,
+          ...itemId,
+        });
+      }
+    }
+  });
+
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const handleOpenModal = () => {
+    dispatch(getOrderDetails(allIdIngredients))
     setModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setModalOpen(false);
-  }
+  };
+
+  const burgerPrice = ingredientsInConstructor.reduce((acc, item) => {
+    return item.type === "bun" ? acc + item.price * 2 : acc + item.price
+  },0);
+
+  const disableButton = ingredientsInConstructor.length ? false : true;
 
   return(
-    <section className={burger.section}>
-      <div className={burger.upBun}>
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text={`${data[0].name} (верх)`}
-          price={data[0].price}
-          thumbnail={data[0].image}
-        />
+    <section className={burger.section} >
+      <div className={burger.upBun} >
+        {ingredientsInConstructor.map(item => (
+          (item.type === "bun") &&
+          <ConstructorElement
+            type="top"
+            isLocked={false}
+            text={`${item.name} (верх)`}
+            price={item.price}
+            thumbnail={item.image}
+            key={item._id}
+            handleClose={() => dispatch({ type: DELET_INGREDIENT, id: item.id, _id: item._id })}
+          />))
+        }
       </div>
-      <div className={burger.box}>
-        {data.map(item => (
+      <div className={burger.box} ref={dropTarget} >
+        {ingredientsInConstructor.map((item, index) => (
           (item.type === 'sauce' || item.type === 'main') &&
-          <div className={burger.filling} key={item._id}>
-            <DragIcon type="primary"/>
-            <ConstructorElement
-              text={item.name}
-              price={item.price}
-              thumbnail={item.image}
-            />
-          </div>
+          <ElementConstructor {...item} index={index} key={item.id}/>
         ))}
       </div>
       <div className={burger.downBun}>
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={`${data[0].name} (низ)`}
-          price={data[0].price}
-          thumbnail={data[0].image}
-        />
+        {ingredientsInConstructor.map(item => (
+            (item.type === "bun") &&
+            <ConstructorElement
+              type="bottom"
+              isLocked={false}
+              text={`${item.name} (низ)`}
+              price={item.price}
+              thumbnail={item.image}
+              key={item._id}
+              handleClose={() => dispatch({ type: DELET_INGREDIENT, id: item.id, _id: item._id })}
+            />))
+          }
       </div>
-      <div className={burger.button}>
-        <p className="text text_type_digits-medium">630</p>
+      <div className={burger.button} >
+        <p className="text text_type_digits-medium">{burgerPrice}</p>
         <img src={image3} alt="" className='pr-10 pl-2'/>
-        <Button type="primary" size="large" onClick={handleOpenModal}>Оформить заказ</Button>
-        {isModalOpen &&
+        <Button type="primary" size="large" onClick={handleOpenModal} disabled={disableButton}>Оформить заказ</Button>
+        {isModalOpen && orderDetals.success &&
         <Modal onClose={handleCloseModal}>
-          <OrderDetails/>
+          <OrderDetails {...orderDetals}/>
         </Modal>
           }
       </div>
@@ -70,9 +109,5 @@ function BurgerConstructor ({ data }) {
 };
 
 
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientType.isRequired).isRequired
-};
 
 
-export default BurgerConstructor;

@@ -1,12 +1,12 @@
 import React from "react";
-import order from "./order-details.module.css"
+import order from "./order-details.module.css";
 
+export default function OrderDetails (props) {
 
-export default function OrderDetails () {
   return (
     <>
       <h2 className={`text text_type_digits-large ${order.id} pt-30`}>
-        034536
+      {props.order.number}
       </h2>
       <p className={`text text_type_main-medium ${order.text} pt-8 pb-15`}>
         идентификатор заказа
