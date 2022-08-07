@@ -9,8 +9,7 @@ import { DELET_INGREDIENT, MOVE_CARD } from '../../services/actions/ingredients'
 import { useDrag, useDrop } from "react-dnd";
 
 
-export default function ElementConstructor (props) {
-  const { index } = props
+export default function ElementConstructor ({ ingredient , index }) {
   const dispatch = useDispatch();
   const ref = useRef(null);
 
@@ -74,16 +73,18 @@ export default function ElementConstructor (props) {
     <div className={burger.filling} style={{ opacity }} ref={ref} data-handler-id={handlerId} >
       <DragIcon type="primary"/>
       <ConstructorElement
-        text={props.name}
-        price={props.price}
-        thumbnail={props.image}
-        handleClose={() => dispatch({ type: DELET_INGREDIENT, id: props.id, _id: props._id })}
+        text={ingredient.name}
+        price={ingredient.price}
+        thumbnail={ingredient.image}
+        handleClose={() => dispatch({ type: DELET_INGREDIENT, id: ingredient.id, _id: ingredient._id })}
       />
     </div>
   )
 };
 
 ElementConstructor.propTypes =  {
-  ingredientType,
+  ingredient: ingredientType.isRequired,
   index: PropTypes.number
 }
+
+

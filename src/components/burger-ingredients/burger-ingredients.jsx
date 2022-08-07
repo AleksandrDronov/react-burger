@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Menu from '../menu/menu';
 import Card from '../card/card';
 import burger from './burger-ingredients.module.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { getIngredients } from '../../services/actions/ingredients';
+import { useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 
 function BurgerIngredients () {
   const { ingredients } = useSelector(store => store.ingredients);
-  const dispatch = useDispatch();
 
   const [current, setCurrent] = useState({ tab1: 'one', tab2: '', tab3: ''});
 
@@ -26,12 +24,6 @@ function BurgerIngredients () {
       setCurrent({ tab1: '', tab2: '', tab3: 'three' })
     }
   },[inView, inView2, inView3])
-
-
-
-  useEffect(() => {
-    dispatch(getIngredients())
-  },[dispatch])
 
   return(
     <section className={burger.section}>

@@ -77,7 +77,7 @@ export default function BurgerConstructor () {
       <div className={burger.box} ref={dropTarget} >
         {ingredientsInConstructor.map((item, index) => (
           (item.type === 'sauce' || item.type === 'main') &&
-          <ElementConstructor {...item} index={index} key={item.id}/>
+          <ElementConstructor ingredient={item} index={index} key={item.id}/>
         ))}
       </div>
       <div className={burger.downBun}>

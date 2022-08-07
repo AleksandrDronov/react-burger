@@ -48,6 +48,6 @@ function Card (props) {
 };
 
 
-Card.propTypes =  { ingredientType }
+Card.propTypes =  ingredientType.isRequired
 
 export default Card;
