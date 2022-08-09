@@ -1,12 +1,13 @@
 import React from "react";
-import order from "./order-details.module.css"
+import order from "./order-details.module.css";
+import PropTypes from 'prop-types';
 
+export default function OrderDetails (props) {
 
-export default function OrderDetails () {
   return (
     <>
       <h2 className={`text text_type_digits-large ${order.id} pt-30`}>
-        034536
+      {props.order.number}
       </h2>
       <p className={`text text_type_main-medium ${order.text} pt-8 pb-15`}>
         идентификатор заказа
@@ -16,4 +17,10 @@ export default function OrderDetails () {
       <p className={`text text_type_main-default text_color_inactive ${order.text} pb-30`}>Дождитесь готовности на орбитальной станции</p>
     </>
   )
+};
+
+OrderDetails.propTypes =  {
+  name: PropTypes.string.isRequired,
+  order: PropTypes.object.isRequired,
+  success: PropTypes.bool
 }

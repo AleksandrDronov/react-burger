@@ -31,5 +31,5 @@ export default function IngredientDetails ({ card }) {
   )
 };
 
-IngredientDetails.propTypes =  { ingredientType }
+IngredientDetails.propTypes =  ingredientType.isRequired;
 
