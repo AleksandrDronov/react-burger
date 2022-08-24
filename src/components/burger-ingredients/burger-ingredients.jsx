@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Menu from '../menu/menu';
 import Card from '../card/card';
+import Modal from '../modal/modal';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 import burger from './burger-ingredients.module.css';
 import { useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
+import { useHistory } from 'react-router-dom';
+
 
 function BurgerIngredients () {
   const { ingredients } = useSelector(store => store.ingredients);
-
   const [current, setCurrent] = useState({ tab1: 'one', tab2: '', tab3: ''});
+
 
   const [ ref, inView ] = useInView({threshold: 0 });
   const [ ref2, inView2 ] = useInView({threshold: 0 });
@@ -33,19 +37,19 @@ function BurgerIngredients () {
         <h2 className="text text_type_main-medium mb-6">Булки</h2>
         <div className={burger.buns} ref={ref}>
           {ingredients.map(item => (
-            item.type === 'bun' && <Card {...item} key={item._id} />
+            item.type === 'bun' && <Card item={item} key={item._id} />
           ))}
         </div>
         <h2 className="text text_type_main-medium mt-10 mb-6" >Соусы</h2>
         <div className={burger.souses} ref={ref2}>
           {ingredients.map(item => (
-            item.type === 'sauce' && <Card {...item} key={item._id} />
+            item.type === 'sauce' && <Card item={item} key={item._id} />
           ))}
         </div>
         <h2 className="text text_type_main-medium mt-10 mb-6" >Начинки</h2>
         <div className={burger.souses} ref={ref3}>
           {ingredients.map(item => (
-            item.type === 'main' && <Card {...item} key={item._id} />
+            item.type === 'main' && <Card item={item} key={item._id} />
           ))}
         </div>
       </div>

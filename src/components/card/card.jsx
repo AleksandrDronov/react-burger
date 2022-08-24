@@ -3,46 +3,48 @@ import PropTypes from 'prop-types';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import card from './card.module.css'
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 import ingredientType from '../../utils/type';
 import { useDrag } from "react-dnd";
+import { Link, useHistory, useLocation, useRouteMatch } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { CURRENT_INGREDIENT } from '../../services/actions/ingredients';
 
 
-function Card (props) {
-  const { _id, __v, type } = props;
-  const typeIng = type;
+function Card ({ item }) {
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const { _id, __v, type } = item;
+
+  // console.log(location);
+
 
   const [, dragRef] = useDrag({
     type: "ingredient",
-    item: { _id, __v, typeIng }
+    item: { _id, __v, type }
   });
 
-  const [isModalOpen, setModalOpen] = React.useState(false);
-
-
-  const handleOpenModal = () => {
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
+  const getIngredient = () => {
+    dispatch({
+      type: CURRENT_INGREDIENT,
+      data: item
+    });
   }
+
 
   return(
     <div className={card.card} ref={dragRef}>
-      <img src={props.image} alt={props.name} className={`pl-4 ${card.image}`} onClick={handleOpenModal}/>
+      <Link to={{
+        pathname: `/ingredients/${_id}`,
+        state: { background: location }
+      }}>
+        <img src={item.image} alt={item.name} className={`pl-4 ${card.image}`} onClick={getIngredient}/>
+      </Link>
       <div className={card.price}>
-        <h3 className="text text_type_digits-default mr-2">{props.price}</h3>
+        <h3 className="text text_type_digits-default mr-2">{item.price}</h3>
         <CurrencyIcon type="primary" />
       </div>
-      <h4 className={`${card.name} text text_type_main-default`}>{props.name}</h4>
+      <h4 className={`${card.name} text text_type_main-default`}>{item.name}</h4>
       <Counter count={__v} size="default" />
-      {isModalOpen &&
-      <Modal onClose={handleCloseModal}>
-        <IngredientDetails card={props}/>
-      </Modal>
-        }
     </div>
   );
 };

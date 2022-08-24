@@ -1,10 +1,9 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import ingredient from "./ingredient-details.module.css"
-import ingredientType from "../../utils/type";
+import ingredient from "../components/ingredient-details/ingredient-details.module.css"
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-export default function IngredientDetails () {
+
+export default function IngredientDetailsFull () {
   const { ingredients } = useSelector(store => store.ingredients);
   const { id } = useParams();
 
@@ -37,5 +36,4 @@ export default function IngredientDetails () {
   )
 };
 
-IngredientDetails.propTypes =  ingredientType.isRequired;
 

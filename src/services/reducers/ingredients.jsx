@@ -9,7 +9,9 @@ import {
   MOVE_CARD,
   GET_ORDERDETAILS_REQUEST,
   GET_ORDERDETAILS_SUCCESS,
-  GET_ORDERDETAILS_FAILED
+  GET_ORDERDETAILS_FAILED,
+  CLEARE_CONSTRUCTOR,
+  CURRENT_INGREDIENT
 } from '../actions/ingredients'
 
 const initialState = {
@@ -18,6 +20,8 @@ const initialState = {
   ingredientsFailed: false,
 
   ingredientsInConstructor: [],
+
+  ingredient: {},
 
   orderDetals: {},
   orderDetalsRequest: false,
@@ -117,6 +121,19 @@ export const ingredientsReducer = (state = initialState, action) => {
     }
     case GET_ORDERDETAILS_FAILED: {
       return { ...state, orderDetalsFailed: true, orderDetalsRequest: false };
+    }
+    case CLEARE_CONSTRUCTOR: {
+      return {
+        ...state,
+        ingredientsInConstructor: [],
+        ingredients: state.ingredients.map(item => ({ ...item, __v: 0 }))
+      };
+    }
+    case CURRENT_INGREDIENT: {
+      return {
+        ...state,
+        ingredient: action.data
+      };
     }
     default: {
       return state;

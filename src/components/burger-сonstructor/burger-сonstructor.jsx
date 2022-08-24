@@ -22,20 +22,20 @@ export default function BurgerConstructor () {
 
   const [, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(itemId) {
-      if(itemId.typeIng === "bun") {
+    drop(item) {
+      if(item.type === "bun") {
         dispatch({
+        ...item,
         type: CHANGE_INGREDIENT_BUN,
-        ...itemId,
         });
       } else {
         dispatch({
+          ...item,
           type: UPDATE_TYPE,
-          ...itemId,
         });
         dispatch({
+          ...item,
           type: INCREASE_INGREDIENT,
-          ...itemId,
         });
       }
     }

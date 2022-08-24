@@ -22,6 +22,9 @@
   color: #F2F2F3;
 }
 
+.active_nav_link {
+  /* color: blueviolet; */
+}
 .nav_list {
   composes: nav_burger;
   padding: 0 130px 0 20px;

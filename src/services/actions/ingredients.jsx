@@ -9,10 +9,14 @@ export const MOVE_CARD = "MOVE_CARD";
 export const GET_ORDERDETAILS_REQUEST = "GET_ORDERDETAILS_REQUEST";
 export const GET_ORDERDETAILS_SUCCESS = "GET_ORDERDETAILS_SUCCESS";
 export const GET_ORDERDETAILS_FAILED = "GET_ORDERDETAILS_FAILED";
+export const CLEARE_CONSTRUCTOR = "CLEARE_CONSTRUCTOR";
+export const CURRENT_INGREDIENT = "CURRENT_INGREDIENT";
 
-const baseUrl = "https://norma.nomoreparties.space/api";
 
-function getResponseData(res) {
+
+export const baseUrl = "https://norma.nomoreparties.space/api";
+
+export function getResponseData(res) {
   if (res.ok) {
     return res.json();
   }
@@ -20,11 +24,11 @@ function getResponseData(res) {
 }
 
 export function getIngredients() {
-  return function (dispatch) {
+  return async function (dispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
     });
-    fetch(`${baseUrl}/ingredients`)
+    await fetch(`${baseUrl}/ingredients`)
       .then(getResponseData)
       .then((res) => {
         dispatch({
@@ -59,6 +63,9 @@ export function getOrderDetails(allId) {
         dispatch({
           type: GET_ORDERDETAILS_SUCCESS,
           orderDetals: res,
+        });
+        dispatch({
+          type: CLEARE_CONSTRUCTOR,
         });
       })
       .catch((err) => {
