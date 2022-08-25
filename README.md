@@ -1,6 +1,6 @@
 # Проект: Бургерная
 
-[ссылка](https://aleksandrdronov.github.io)
+[ссылка](https://aleksandrdronov.github.io/react-burger/)
 
 ### Используемые технологии:
 1. ReactJS
