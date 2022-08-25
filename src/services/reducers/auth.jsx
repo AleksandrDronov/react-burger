@@ -49,8 +49,6 @@ const initialState = {
   saveUserRequest: false,
   saveUserFailed: false,
 
-
-
 };
 
 export const authReducer = (state = initialState, action) => {

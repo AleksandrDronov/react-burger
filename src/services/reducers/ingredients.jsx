@@ -11,7 +11,6 @@ import {
   GET_ORDERDETAILS_SUCCESS,
   GET_ORDERDETAILS_FAILED,
   CLEARE_CONSTRUCTOR,
-  CURRENT_INGREDIENT
 } from '../actions/ingredients'
 
 const initialState = {
@@ -20,8 +19,6 @@ const initialState = {
   ingredientsFailed: false,
 
   ingredientsInConstructor: [],
-
-  ingredient: {},
 
   orderDetals: {},
   orderDetalsRequest: false,
@@ -127,12 +124,6 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         ingredientsInConstructor: [],
         ingredients: state.ingredients.map(item => ({ ...item, __v: 0 }))
-      };
-    }
-    case CURRENT_INGREDIENT: {
-      return {
-        ...state,
-        ingredient: action.data
       };
     }
     default: {

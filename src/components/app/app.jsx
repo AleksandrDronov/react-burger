@@ -8,7 +8,7 @@ import RegisterPage from "../../pages/register.jsx";
 import ForgotPasswordPage from "../../pages/forgot-password.jsx";
 import ResetPasswordPage from "../../pages/reset-password.jsx";
 import ProfilePage from "../../pages/profile.jsx";
-import { ProtectedRoute } from "../protected-route.jsx";
+import ProtectedRoute from "../protected-route.jsx";
 import main from "./app.module.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -32,20 +32,16 @@ function App() {
   };
 
   useEffect(() => {
-    init()
+    init();
+    history.replace({ state: null })
   }, []);
-
 
   const handleCloseModal = () => {
     history.goBack();
   };
 
-
   const background = location.state && location.state.background;
 
-  console.log(location);
-
-  console.log(background);
 
   if (!isUserLoaded) {
     return null;

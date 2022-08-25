@@ -10,9 +10,12 @@ export default function LoginPage () {
   const dispatch = useDispatch();
   const [form, setValue] = useState({ email: '', password: '' });
 
-  const onChange = e => {
-    setValue({ ...form, [e.target.name]: e.target.value })
-  };
+  const onChange = useCallback(
+    e => {
+      setValue({ ...form, [e.target.name]: e.target.value })
+    },
+    [form]
+  );
 
   const login = useCallback(
     e => {

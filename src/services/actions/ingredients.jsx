@@ -10,8 +10,6 @@ export const GET_ORDERDETAILS_REQUEST = "GET_ORDERDETAILS_REQUEST";
 export const GET_ORDERDETAILS_SUCCESS = "GET_ORDERDETAILS_SUCCESS";
 export const GET_ORDERDETAILS_FAILED = "GET_ORDERDETAILS_FAILED";
 export const CLEARE_CONSTRUCTOR = "CLEARE_CONSTRUCTOR";
-export const CURRENT_INGREDIENT = "CURRENT_INGREDIENT";
-
 
 
 export const baseUrl = "https://norma.nomoreparties.space/api";
@@ -45,11 +43,11 @@ export function getIngredients() {
 }
 
 export function getOrderDetails(allId) {
-  return function (dispatch) {
+  return async function (dispatch) {
     dispatch({
       type: GET_ORDERDETAILS_REQUEST,
     });
-    fetch(`${baseUrl}/orders`, {
+    await fetch(`${baseUrl}/orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

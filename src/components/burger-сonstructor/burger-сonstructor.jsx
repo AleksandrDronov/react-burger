@@ -9,14 +9,15 @@ import ElementConstructor from '../constructor-element/constructor-element';
 import { useSelector, useDispatch } from 'react-redux';
 import { UPDATE_TYPE, DELET_INGREDIENT, INCREASE_INGREDIENT, CHANGE_INGREDIENT_BUN, getOrderDetails } from '../../services/actions/ingredients';
 import { useDrop } from "react-dnd";
+import { useHistory } from 'react-router-dom';
 
 
 export default function BurgerConstructor () {
 
-  const { ingredientsInConstructor } = useSelector(store => store.ingredients);
-  const { orderDetals } = useSelector(store => store.ingredients);
-
+  const { ingredientsInConstructor, orderDetals } = useSelector(store => store.ingredients);
+  const { authorization } = useSelector(store => store.auth)
   const dispatch = useDispatch();
+  const history = useHistory()
 
   const allIdIngredients = ingredientsInConstructor.map(item => item._id);
 
@@ -43,9 +44,13 @@ export default function BurgerConstructor () {
 
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const handleOpenModal = () => {
-    dispatch(getOrderDetails(allIdIngredients))
-    setModalOpen(true);
+  const handleOpenModal = async() => {
+    if (!authorization.user) {
+      history.replace('/login');
+    } else {
+      await dispatch(getOrderDetails(allIdIngredients))
+      setModalOpen(true);
+    };
   };
 
   const handleCloseModal = () => {

@@ -19,11 +19,11 @@
 .nav_link {
   display: flex;
   text-decoration: none;
-  color: #F2F2F3;
+  color: #8585AD;
 }
 
 .active_nav_link {
-  /* color: blueviolet; */
+  color: #F2F2F3;
 }
 .nav_list {
   composes: nav_burger;
