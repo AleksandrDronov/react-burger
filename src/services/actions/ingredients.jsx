@@ -18,7 +18,7 @@ export function getResponseData(res) {
   if (res.ok) {
     return res.json();
   }
-  return Promise.reject(`Ошибка: ${res.status}`);
+  return Promise.reject(res);
 }
 
 export function getIngredients() {
@@ -28,13 +28,14 @@ export function getIngredients() {
     });
     await fetch(`${baseUrl}/ingredients`)
       .then(getResponseData)
-      .then((res) => {
+      .then(res => {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
           ingredients: res.data,
         });
       })
-      .catch((err) => {
+      .catch(err => {
+        console.log(`Ошибка: ${err.status}`);
         dispatch({
           type: GET_INGREDIENTS_FAILED,
         });
@@ -57,7 +58,7 @@ export function getOrderDetails(allId) {
       }),
     })
       .then(getResponseData)
-      .then((res) => {
+      .then(res => {
         dispatch({
           type: GET_ORDERDETAILS_SUCCESS,
           orderDetals: res,
@@ -66,7 +67,8 @@ export function getOrderDetails(allId) {
           type: CLEARE_CONSTRUCTOR,
         });
       })
-      .catch((err) => {
+      .catch(err => {
+        console.log(`Ошибка: ${err.status}`);
         dispatch({
           type: GET_ORDERDETAILS_FAILED,
         });

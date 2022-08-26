@@ -24,7 +24,7 @@ export const SAVE_USER_SUCCESS = "SAVE_USER_SUCCESS";
 export const SAVE_USER_FAILED = "SAVE_USER_FAILED";
 
 
-export function RegistrationRequest(form) {
+export function registrationRequest(form) {
   return function (dispatch) {
     dispatch({
       type: REGISTRATION_REQUEST,
@@ -36,21 +36,15 @@ export function RegistrationRequest(form) {
       },
       body: JSON.stringify(form)
     })
-      .then(res => res.json())
+      .then(getResponseData)
       .then(data => {
-        if(data.success) {
-          dispatch({
-            type: REGISTRATION_SUCCESS,
-            registrationDetals: data,
-          });
-        } else {
-          dispatch({
-            type: REGISTRATION_FAILED,
-            registrationDetals: data,
-          });
-        }
+        dispatch({
+          type: REGISTRATION_SUCCESS,
+          registrationDetals: data,
+        });
       })
       .catch(err => {
+        console.log(`Ошибка: ${err.status}`);
         dispatch({
           type: REGISTRATION_FAILED,
           registrationDetals: null,
@@ -59,7 +53,7 @@ export function RegistrationRequest(form) {
   };
 };
 
-export function LoginRequest(form) {
+export function loginRequest(form) {
   return function (dispatch) {
     dispatch({
       type: AUTHORIZATION_REQUEST,
@@ -72,7 +66,7 @@ export function LoginRequest(form) {
       body: JSON.stringify(form)
     })
       .then(getResponseData)
-      .then((data) => {
+      .then(data => {
         setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
         setCookie('refreshToken', data.refreshToken);
         dispatch({
@@ -80,7 +74,8 @@ export function LoginRequest(form) {
           authDetals: data,
         });
       })
-      .catch((err) => {
+      .catch(err => {
+        console.log(`Ошибка: ${err.status}`);
         dispatch({
           type: AUTHORIZATION_FAILED,
         });
@@ -88,7 +83,7 @@ export function LoginRequest(form) {
   };
 };
 
-export function LogoutRequest() {
+export function logoutRequest() {
   return async function (dispatch) {
     dispatch({
       type: LOGOUT_REQUEST,
@@ -110,7 +105,8 @@ export function LogoutRequest() {
           type: LOGOUT_SUCCESS,
         });
       })
-      .catch((err) => {
+      .catch(err => {
+        console.log(`Ошибка: ${err.status}`);
         dispatch({
           type: LOGOUT_FAILED,
         });
@@ -118,7 +114,7 @@ export function LogoutRequest() {
   };
 }
 
-export function ResetPasswordRequest(form) {
+export function resetPasswordRequest(form) {
   return function (dispatch) {
     dispatch({
       type: RESET_PASSWORD_REQUEST,
@@ -130,20 +126,15 @@ export function ResetPasswordRequest(form) {
       },
       body: JSON.stringify(form)
     })
-      .then(res => res.json())
+      .then(getResponseData)
       .then(data => {
-        if(data.success) {
-          dispatch({
-            type: RESET_PASSWORD_SUCCESS,
-            data: data
-          });
-        } else {
-          dispatch({
-            type: RESET_PASSWORD_FAILED,
-          });
-        }
+        dispatch({
+          type: RESET_PASSWORD_SUCCESS,
+          data: data
+        });
       })
-      .catch((err) => {
+      .catch(err => {
+        console.log(`Ошибка: ${err.status}`);
         dispatch({
           type: RESET_PASSWORD_FAILED,
         });
@@ -151,7 +142,7 @@ export function ResetPasswordRequest(form) {
   };
 };
 
-export function ResetRequest(form) {
+export function resetRequest(form) {
   return function (dispatch) {
     dispatch({
       type: RESET2_PASSWORD_REQUEST,
@@ -163,20 +154,15 @@ export function ResetRequest(form) {
       },
       body: JSON.stringify(form)
     })
-      .then(res => res.json())
+      .then(getResponseData)
       .then(data => {
-        if(data.success) {
-          dispatch({
-            type: RESET2_PASSWORD_SUCCESS,
-            data: data
-          });
-        } else {
-          dispatch({
-            type: RESET2_PASSWORD_FAILED,
-          });
-        }
+        dispatch({
+          type: RESET2_PASSWORD_SUCCESS,
+          data: data
+        });
       })
-      .catch((err) => {
+      .catch(err => {
+        console.log(`Ошибка: ${err.status}`);
         dispatch({
           type: RESET2_PASSWORD_FAILED,
         });
@@ -196,39 +182,40 @@ export function getUser() {
         Authorization: 'Bearer ' + getCookie('accessToken')
       }
     })
-      .then(res => res.json())
+      .then(getResponseData)
       .then(data => {
-        if(data.success) {
-          dispatch({
-            type: GET_USER_SUCCESS,
-            userDetals: data,
-          });
-        };
+        dispatch({
+          type: GET_USER_SUCCESS,
+          userDetals: data,
+        });
         return data
       })
-        .catch((err) => {
-          dispatch({
-            type: GET_USER_FAILED,
-          });
+      .catch(err => {
+        console.log(`Ошибка: ${err.status}`);
+        dispatch({
+          type: GET_USER_FAILED,
+        });
+        return err.json()
       });
 
-      if(!data.success) {
-        await fetch(`${baseUrl}/auth/token`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            token: getCookie('refreshToken')
-          })
+    if(!data.success) {
+      await fetch(`${baseUrl}/auth/token`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: getCookie('refreshToken')
         })
-          .then(res => res.json())
-          .then(data => {
-            if(data.success) {
-              deleteCookie('accessToken');
-              setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
-            }
-          })
+      })
+        .then(getResponseData)
+        .then(data => {
+          deleteCookie('accessToken');
+          setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
+        })
+        .catch(err => {
+          console.log(`Ошибка: ${err.status}`);
+        });
 
         await fetch(`${baseUrl}/auth/user`, {
           method: "GET",
@@ -237,21 +224,20 @@ export function getUser() {
             Authorization: 'Bearer ' + getCookie('accessToken')
           }
         })
-          .then(res => res.json())
-          .then(data => {
-            if(data.success) {
-              dispatch({
-                type: GET_USER_SUCCESS,
-                userDetals: data,
-              });
-            };
-          })
-          .catch((err) => {
+        .then(getResponseData)
+        .then(data => {
             dispatch({
-              type: GET_USER_FAILED,
+              type: GET_USER_SUCCESS,
+              userDetals: data,
             });
+        })
+        .catch(err => {
+          console.log(`Ошибка: ${err.status}`);
+          dispatch({
+            type: GET_USER_FAILED,
           });
-      }
+        });
+    }
 
   };
 };
@@ -276,10 +262,11 @@ export function saveUser(form) {
             userDetals: data,
           });
       })
-        .catch(err => {
-          dispatch({
-            type: SAVE_USER_FAILED,
-          });
+      .catch(err => {
+        console.log(`Ошибка: ${err.status}`);
+        dispatch({
+          type: SAVE_USER_FAILED,
+        });
       });
   };
 };

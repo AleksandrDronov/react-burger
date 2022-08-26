@@ -1,10 +1,10 @@
 import React, { useCallback, useState, useRef } from 'react';
 import { NavLink, Route, Switch } from "react-router-dom";
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { LogoutRequest, saveUser } from '../services/actions/auth';
+import { logoutRequest, saveUser } from '../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
+import useForm from '../hooks/use-form';
 import styles from './login.module.css'
 import profile from './profile.module.css'
 
@@ -18,19 +18,16 @@ export default function ProfilePage () {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [form, setValue] = useState({ name: user.name, email: user.email, password: '' });
+  const { values, handleChange, setValues } = useForm({ name: user.name, email: user.email, password: '' });
+
   const [disableName, setDisableName] = useState(true);
   const [disablelogin, setDisablelogin] = useState(true);
   const [disablePass, setDisablePass] = useState(true);
 
 
-  const onChange = e => {
-    setValue({ ...form, [e.target.name]: e.target.value })
-  };
-
   const logout = useCallback(
     async() => {
-      await dispatch(LogoutRequest());
+      await dispatch(logoutRequest());
       history.replace({ pathname: '/login' });
     },
     [history, dispatch]
@@ -39,14 +36,14 @@ export default function ProfilePage () {
   const save = useCallback(
     e => {
       e.preventDefault();
-      dispatch(saveUser(form));
+      dispatch(saveUser(values));
     },
-    [form, dispatch]
+    [values, dispatch]
   );
 
   const cancel = e => {
     e.preventDefault();
-    setValue({ name: user.name, email: user.email, password: '' })
+    setValues({ name: user.name, email: user.email, password: '' })
   };
 
   return (
@@ -67,13 +64,13 @@ export default function ProfilePage () {
       </div>
       <Switch>
         <Route path='/profile' exact={true}>
-          <form className={`${profile.form}`} >
+          <form className={`${profile.form}`} onSubmit={save}>
             <div className={`${styles.container} pb-6`}>
               <Input
                 type={'text'}
                 placeholder={'Имя'}
-                onChange={onChange}
-                value={form.name}
+                onChange={handleChange}
+                value={values.name}
                 name={'name'}
                 icon={'EditIcon'}
                 onIconClick={() => {
@@ -88,8 +85,8 @@ export default function ProfilePage () {
               <Input
                 type={'email'}
                 placeholder={'Логин'}
-                onChange={onChange}
-                value={form.email}
+                onChange={handleChange}
+                value={values.email}
                 name={'email'}
                 icon={'EditIcon'}
                 onIconClick={() => {
@@ -104,8 +101,8 @@ export default function ProfilePage () {
             <Input
                 type={'password'}
                 placeholder={'Пароль'}
-                onChange={onChange}
-                value={form.password}
+                onChange={handleChange}
+                value={values.password}
                 name={'password'}
                 icon={'EditIcon'}
                 onIconClick={() => {
@@ -118,7 +115,7 @@ export default function ProfilePage () {
             </div>
             <div className={profile.button_container}>
               <button className={`${profile.cancel_button} text text_type_main-default mr-7`} onClick={cancel}>Отмена</button>
-              <Button type="primary" size="medium" onClick={save}>Сохранить</Button>
+              <Button type="primary" size="medium" >Сохранить</Button>
             </div>
           </form>
         </Route>
