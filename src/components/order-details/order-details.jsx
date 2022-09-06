@@ -1,6 +1,7 @@
 import React from "react";
 import order from "./order-details.module.css";
 import PropTypes from 'prop-types';
+import { useSelector } from "react-redux";
 
 export default function OrderDetails (props) {
 

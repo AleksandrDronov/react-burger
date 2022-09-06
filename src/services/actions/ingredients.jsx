@@ -9,30 +9,33 @@ export const MOVE_CARD = "MOVE_CARD";
 export const GET_ORDERDETAILS_REQUEST = "GET_ORDERDETAILS_REQUEST";
 export const GET_ORDERDETAILS_SUCCESS = "GET_ORDERDETAILS_SUCCESS";
 export const GET_ORDERDETAILS_FAILED = "GET_ORDERDETAILS_FAILED";
+export const CLEARE_CONSTRUCTOR = "CLEARE_CONSTRUCTOR";
 
-const baseUrl = "https://norma.nomoreparties.space/api";
 
-function getResponseData(res) {
+export const baseUrl = "https://norma.nomoreparties.space/api";
+
+export function getResponseData(res) {
   if (res.ok) {
     return res.json();
   }
-  return Promise.reject(`Ошибка: ${res.status}`);
+  return Promise.reject(res);
 }
 
 export function getIngredients() {
-  return function (dispatch) {
+  return async function (dispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
     });
-    fetch(`${baseUrl}/ingredients`)
+    await fetch(`${baseUrl}/ingredients`)
       .then(getResponseData)
-      .then((res) => {
+      .then(res => {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
           ingredients: res.data,
         });
       })
-      .catch((err) => {
+      .catch(err => {
+        console.log(`Ошибка: ${err.status}`);
         dispatch({
           type: GET_INGREDIENTS_FAILED,
         });
@@ -41,11 +44,11 @@ export function getIngredients() {
 }
 
 export function getOrderDetails(allId) {
-  return function (dispatch) {
+  return async function (dispatch) {
     dispatch({
       type: GET_ORDERDETAILS_REQUEST,
     });
-    fetch(`${baseUrl}/orders`, {
+    await fetch(`${baseUrl}/orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,13 +58,17 @@ export function getOrderDetails(allId) {
       }),
     })
       .then(getResponseData)
-      .then((res) => {
+      .then(res => {
         dispatch({
           type: GET_ORDERDETAILS_SUCCESS,
           orderDetals: res,
         });
+        dispatch({
+          type: CLEARE_CONSTRUCTOR,
+        });
       })
-      .catch((err) => {
+      .catch(err => {
+        console.log(`Ошибка: ${err.status}`);
         dispatch({
           type: GET_ORDERDETAILS_FAILED,
         });

@@ -1,10 +1,11 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './components/app/app.jsx';
-import { compose, createStore, applyMiddleware } from 'redux';
+import { compose, legacy_createStore as createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { rootReducer } from './services/reducers/index';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 
 const composeEnhancers =
@@ -19,7 +20,9 @@ const root = createRoot(document.getElementById('root'));
 
 root.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </Provider>
 );
 

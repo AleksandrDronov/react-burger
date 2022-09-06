@@ -19,9 +19,12 @@
 .nav_link {
   display: flex;
   text-decoration: none;
-  color: #F2F2F3;
+  color: #8585AD;
 }
 
+.active_nav_link {
+  color: #F2F2F3;
+}
 .nav_list {
   composes: nav_burger;
   padding: 0 130px 0 20px;

@@ -1,18 +1,18 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import ingredient from "./ingredient-details.module.css"
-import ingredientType from "../../utils/type";
+import ingredient from "../components/ingredient-details/ingredient-details.module.css"
+import ingredientfull from "./ingredient-details-full.module.css"
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-export default function IngredientDetails () {
+
+export default function IngredientDetailsFull () {
   const { ingredients } = useSelector(store => store.ingredients);
   const { id } = useParams();
 
   const card = ingredients.find(({ _id }) => _id === id);
 
   return (
-    <>
-      <h2 className="text text_type_main-large pt-10 pl-10 pb-2">Детали ингредиента</h2>
+    <div className={ingredientfull.container}>
+      <h2 className={`${ingredientfull.title} text text_type_main-large pt-10 pb-2`}>Детали ингредиента</h2>
       <img src={card.image_large} alt={card.name} className={ingredient.image}></img>
       <p className={`text text_type_main-medium pt-4 pb-8 ${ingredient.title}`}>{card.name}</p>
       <div className={`${ingredient.container} pb-15 pl-25 pr-25`}>
@@ -33,9 +33,8 @@ export default function IngredientDetails () {
           <p className="text text_type_digits-default text_color_inactive">{card.carbohydrates}</p>
         </div>
       </div>
-    </>
+    </div>
   )
 };
 
-IngredientDetails.propTypes =  ingredientType.isRequired;
 
