@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Menu from '../menu/menu';
 import Card from '../card/card';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 import burger from './burger-ingredients.module.css';
 import { useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
-import { useHistory } from 'react-router-dom';
-
 
 function BurgerIngredients () {
   const { ingredients } = useSelector(store => store.ingredients);
   const [current, setCurrent] = useState({ tab1: 'one', tab2: '', tab3: ''});
-
 
   const [ ref, inView ] = useInView({threshold: 0 });
   const [ ref2, inView2 ] = useInView({threshold: 0 });

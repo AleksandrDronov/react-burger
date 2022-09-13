@@ -67,8 +67,8 @@ export function loginRequest(form) {
     })
       .then(getResponseData)
       .then(data => {
-        setCookie('accessToken', data.accessToken.split('Bearer ')[1]);
-        setCookie('refreshToken', data.refreshToken);
+        setCookie('accessToken', data.accessToken.split('Bearer ')[1], {path : '/'});
+        setCookie('refreshToken', data.refreshToken, {path : '/'});
         dispatch({
           type: AUTHORIZATION_SUCCESS,
           authDetals: data,

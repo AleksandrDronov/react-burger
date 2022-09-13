@@ -1,0 +1,80 @@
+.card {
+  max-width: 640px;
+  margin: auto;
+  margin-top: 122px;
+  z-index: 2;
+}
+
+.order_number {
+  text-align: center;
+}
+
+.order_status {
+  color: #00CCCC;
+}
+
+.ingredients {
+  height: 320px;
+  overflow-y: scroll;
+}
+
+.ingredients::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ingredients::-webkit-scrollbar-thumb {
+  border-radius: 0;
+  background: #8585AD;
+}
+
+.ingredients::-webkit-scrollbar-track {
+  border-radius: 0;
+  background: #2F2F37;
+}
+
+.ingredient {
+  display: flex;
+  align-items: center;
+  max-width: 608px;
+}
+
+.image_container {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(to right,  #801AB2,#4C4CFF);
+  border-radius: 100%;
+  padding: 2px;
+}
+
+.image_container2 {
+  background-color: #131316;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover ;
+}
+
+.ingredient_title {
+  width: 358px;
+}
+
+.ingredient_price {
+  display: flex;
+  width: 150px;
+  justify-content: flex-end;
+}
+
+.total_price {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.price {
+  display: flex;
+}

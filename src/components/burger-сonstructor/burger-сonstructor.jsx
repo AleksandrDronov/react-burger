@@ -14,7 +14,7 @@ import { useHistory } from 'react-router-dom';
 
 export default function BurgerConstructor () {
 
-  const { ingredientsInConstructor, orderDetals } = useSelector(store => store.ingredients);
+  const { ingredientsInConstructor, orderDetals, orderDetalsRequest } = useSelector(store => store.ingredients);
   const { authorization } = useSelector(store => store.auth)
   const dispatch = useDispatch();
   const history = useHistory()
@@ -44,10 +44,14 @@ export default function BurgerConstructor () {
 
   const [isModalOpen, setModalOpen] = useState(false);
 
+  const disableButton = ingredientsInConstructor.length ? false : true;
+  const nameDisableButton = orderDetalsRequest ? 'Оформление заказа...' : 'Оформить заказ'
+
   const handleOpenModal = async() => {
     if (!authorization.user) {
       history.replace('/login');
     } else {
+      dispatch({ type: 'CLEARE_CONSTRUCTOR' });
       await dispatch(getOrderDetails(allIdIngredients))
       setModalOpen(true);
     };
@@ -61,7 +65,6 @@ export default function BurgerConstructor () {
     return item.type === "bun" ? acc + item.price * 2 : acc + item.price
   },0);
 
-  const disableButton = ingredientsInConstructor.length ? false : true;
 
   return(
     <section className={burger.section} >
@@ -102,7 +105,7 @@ export default function BurgerConstructor () {
       <div className={burger.button} >
         <p className="text text_type_digits-medium">{burgerPrice}</p>
         <img src={image3} alt="" className='pr-10 pl-2'/>
-        <Button type="primary" size="large" onClick={handleOpenModal} disabled={disableButton}>Оформить заказ</Button>
+        <Button type="primary" size="large" onClick={handleOpenModal} disabled={disableButton}>{nameDisableButton}</Button>
         {isModalOpen && orderDetals.success &&
         <Modal onClose={handleCloseModal}>
           <OrderDetails {...orderDetals}/>

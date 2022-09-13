@@ -10,7 +10,7 @@ export default function LoginPage () {
   const { authorization } = useSelector(store => store.auth);
   const dispatch = useDispatch();
   const location = useLocation();
-  const {values, handleChange } = useForm({ email: '', password: '' });
+  const { values, handleChange } = useForm({ email: '', password: '' });
 
   const login = useCallback(
     e => {
