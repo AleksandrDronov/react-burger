@@ -20,9 +20,9 @@ function Header () {
             </NavLink>
           </li>
           <li className={headerStyles.nav_list}>
-            <NavLink  to='#' className={headerStyles.nav_link} activeClassName={headerStyles.active_nav_link}>
-              <ListIcon type="secondary" />
-              <span className="text text_type_main-default text_color_inactive pl-2">Лента заказов</span>
+            <NavLink  to='/feed' className={headerStyles.nav_link} activeClassName={headerStyles.active_nav_link}>
+              <ListIcon type={pathname === '/feed' ? "primary" : "secondary"} />
+              <span className="text text_type_main-default pl-2">Лента заказов</span>
             </NavLink>
           </li>
           <li><NavLink to='/'><Logo /></NavLink></li>

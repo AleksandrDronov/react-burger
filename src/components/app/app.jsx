@@ -9,6 +9,10 @@ import ForgotPasswordPage from "../../pages/forgot-password.jsx";
 import ResetPasswordPage from "../../pages/reset-password.jsx";
 import ProfilePage from "../../pages/profile.jsx";
 import ProtectedRoute from "../protected-route.jsx";
+import ErrorPage from "../../pages/404Page.jsx";
+import Feed from "../../pages/feed.jsx";
+import OrderInfo from "../order-info/order-info.jsx";
+import OrderInfoFull from "../../pages/order-info-full.jsx";
 import main from "./app.module.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -42,7 +46,6 @@ function App() {
 
   const background = location.state && location.state.background;
 
-
   if (!isUserLoaded) {
     return null;
   }
@@ -63,6 +66,9 @@ function App() {
         <Route path='/reset-password'>
           <ResetPasswordPage/>
         </Route>
+        <Route path='/profile/orders/:id' exact={true}>
+          <OrderInfoFull/>
+        </Route>
         <ProtectedRoute path='/profile'>
           <ProfilePage/>
         </ProtectedRoute>
@@ -77,16 +83,34 @@ function App() {
         <Route path='/ingredients/:id' >
           <IngredientDetailsFull />
         </Route>
+        <Route path='/feed' exact={true}>
+          <Feed/>
+        </Route>
+        <Route path='/feed/:id' >
+          <OrderInfoFull/>
+        </Route>
         <Route>
-          404
+          <ErrorPage/>
         </Route>
       </Switch>
       { background && (
-        <Route path='/ingredients/:id' >
-          <Modal onClose={handleCloseModal}>
-            <IngredientDetails />
-          </Modal>
-        </Route>)}
+       <Switch>
+          <Route path='/ingredients/:id' >
+            <Modal onClose={handleCloseModal}>
+              <IngredientDetails />
+            </Modal>
+          </Route>
+          <Route path='/feed/:id' >
+            <Modal onClose={handleCloseModal}>
+              <OrderInfo/>
+            </Modal>
+          </Route>
+          <Route path='/profile/orders/:id' >
+            <Modal onClose={handleCloseModal}>
+              <OrderInfo/>
+            </Modal>
+          </Route>
+       </Switch>)}
     </>
   );
 }

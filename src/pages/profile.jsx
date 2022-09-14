@@ -1,16 +1,23 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useState, useRef, useEffect } from 'react';
+import OrderInHistory from '../components/order-in-history/order-in-history.jsx';
 import { NavLink, Route, Switch } from "react-router-dom";
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { logoutRequest, saveUser } from '../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import useForm from '../hooks/use-form';
-import styles from './login.module.css'
-import profile from './profile.module.css'
-
+import styles from './login.module.css';
+import profile from './profile.module.css';
+import { getCookie } from '../utils/cookie.js';
+import {
+  WS_AUTH_CONNECTION_START,
+  WS_AUTH_CONNECTION_END
+} from '../services/actions/websocket.jsx';
 
 export default function ProfilePage () {
   const { user } = useSelector(store => store.auth.authorization);
+  const { orders } = useSelector(store => store.ordersList.userOrders);
+
   const inputRefName = useRef(null);
   const inputReflogin = useRef(null);
   const inputRefPass = useRef(null);
@@ -24,6 +31,13 @@ export default function ProfilePage () {
   const [disablelogin, setDisablelogin] = useState(true);
   const [disablePass, setDisablePass] = useState(true);
 
+  useEffect(() => {
+    const accessToken = getCookie('accessToken');
+    dispatch({ type: WS_AUTH_CONNECTION_START, payload: `?token=${accessToken}` });
+    return () => {
+      dispatch({ type: WS_AUTH_CONNECTION_END });
+    }
+  }, [])
 
   const logout = useCallback(
     async() => {
@@ -54,7 +68,7 @@ export default function ProfilePage () {
             <NavLink to='/profile' exact={true} className={`${profile.link} text text_type_main-medium text_color_inactive`} activeClassName={profile.active_link}>Профиль</NavLink>
           </li>
           <li className={profile.item}>
-            <NavLink to='/profile/orders' className={`${profile.link} text text_type_main-medium text_color_inactive`} activeClassName={profile.active_link}>История заказов</NavLink>
+            <NavLink to='/profile/orders' exact={true} className={`${profile.link} text text_type_main-medium text_color_inactive`} activeClassName={profile.active_link}>История заказов</NavLink>
           </li>
           <li className={profile.item}>
             <button className={`${profile.button} text text_type_main-medium text_color_inactive`} onClick={logout}>Выход</button>
@@ -120,7 +134,11 @@ export default function ProfilePage () {
           </form>
         </Route>
         <Route path='/profile/orders' >
-          ЗАКАЗ
+          <div className={profile.box}>
+            {orders?.map(order => (
+              <OrderInHistory order={order} key={order._id}/>
+            ))}
+          </div>
         </Route>
       </Switch>
     </div>

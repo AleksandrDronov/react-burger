@@ -1,3 +1,5 @@
+import { getCookie } from '../../utils/cookie';
+
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
 export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
@@ -52,6 +54,7 @@ export function getOrderDetails(allId) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: 'Bearer ' + getCookie('accessToken')
       },
       body: JSON.stringify({
         ingredients: allId,
