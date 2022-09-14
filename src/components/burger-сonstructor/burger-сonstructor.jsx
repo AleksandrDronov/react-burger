@@ -44,14 +44,13 @@ export default function BurgerConstructor () {
 
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const disableButton = ingredientsInConstructor.length ? false : true;
+  const disableButton = (ingredientsInConstructor.length ? false : true) || orderDetalsRequest;
   const nameDisableButton = orderDetalsRequest ? 'Оформление заказа...' : 'Оформить заказ'
 
   const handleOpenModal = async() => {
     if (!authorization.user) {
       history.replace('/login');
     } else {
-      dispatch({ type: 'CLEARE_CONSTRUCTOR' });
       await dispatch(getOrderDetails(allIdIngredients))
       setModalOpen(true);
     };

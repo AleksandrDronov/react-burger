@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styles from './feed.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import Order from '../components/order/order';
+import {
+  WS_CONNECTION_START,
+  WS_CONNECTION_END
+} from '../services/actions/websocket';
+
 
 
 export default function Feed () {
@@ -9,14 +14,14 @@ export default function Feed () {
   const dispatch = useDispatch();
 
   useEffect(() => {
-      dispatch({ type: 'WS_FEED_CONNECTION_START' });
+    dispatch({ type: WS_CONNECTION_START, payload: '/all' });
       return () => {
-        dispatch({ type: 'WS_CONNECTION_END' });
+        dispatch({ type: WS_CONNECTION_END });
       }
   }, [])
 
   return(
-    orders.success &&
+    orders.orders &&
     (<section className={styles.section}>
       <h1 className="text text_type_main-large mt-10 mb-5">Лента заказов</h1>
       <div className={styles.container}>

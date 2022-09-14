@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react';
 import OrderInHistory from '../components/order-in-history/order-in-history.jsx';
-import OrderInfoFull from './order-info-full.jsx';
 import { NavLink, Route, Switch } from "react-router-dom";
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { logoutRequest, saveUser } from '../services/actions/auth';
@@ -9,7 +8,11 @@ import { useHistory } from 'react-router-dom';
 import useForm from '../hooks/use-form';
 import styles from './login.module.css';
 import profile from './profile.module.css';
-
+import { getCookie } from '../utils/cookie.js';
+import {
+  WS_AUTH_CONNECTION_START,
+  WS_AUTH_CONNECTION_END
+} from '../services/actions/websocket.jsx';
 
 export default function ProfilePage () {
   const { user } = useSelector(store => store.auth.authorization);
@@ -29,9 +32,10 @@ export default function ProfilePage () {
   const [disablePass, setDisablePass] = useState(true);
 
   useEffect(() => {
-    dispatch({ type: 'WS_ORDERS_CONNECTION_START' });
+    const accessToken = getCookie('accessToken');
+    dispatch({ type: WS_AUTH_CONNECTION_START, payload: `?token=${accessToken}` });
     return () => {
-      dispatch({ type: 'WS_CONNECTION_END' });
+      dispatch({ type: WS_AUTH_CONNECTION_END });
     }
   }, [])
 

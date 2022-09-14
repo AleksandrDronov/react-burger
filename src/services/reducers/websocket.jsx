@@ -3,7 +3,10 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_ORDERS,
-  WS_GET_USER_ORDERS
+  WS_AUTH_CONNECTION_SUCCESS,
+  WS_AUTH_CONNECTION_ERROR,
+  WS_AUTH_CONNECTION_CLOSED,
+  WS_AUTH_GET_ORDERS,
 } from '../actions/websocket';
 
 const initialState = {
@@ -34,7 +37,22 @@ export const wsReducer = (state = initialState, action) => {
         ...state,
         orders: action.payload
       };
-    case WS_GET_USER_ORDERS:
+    case WS_AUTH_CONNECTION_SUCCESS:
+      return {
+        ...state,
+        wsConnected: true
+      };
+    case WS_AUTH_CONNECTION_ERROR:
+      return {
+        ...state,
+        wsConnected: false
+      };
+    case WS_AUTH_CONNECTION_CLOSED:
+      return {
+        ...state,
+        wsConnected: false
+      };
+    case WS_AUTH_GET_ORDERS:
       return {
         ...state,
         userOrders: { ...action.payload, orders: action.payload.orders.reverse() }

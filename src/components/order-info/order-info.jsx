@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 import { formatDate } from '../../utils/formate-date';
@@ -21,9 +21,14 @@ export default function OrderInfo () {
         orderIngredients.push(ingredients[i])
       }
     }
-  }
+  };
 
-  const orderPrice = orderIngredients.reduce((acc, item) => item.type === 'bun' ? acc + item.price * 2 : acc + item.price, 0);
+  const countIngredients = useCallback(ingredient => {
+    return orderIngredients.filter(item => item._id === ingredient._id).length;
+  }, [orderIngredients]);
+
+  const filderedOrderIngredients = useMemo(() => orderIngredients.filter((item, pos) => pos === orderIngredients.indexOf(item)), [orderIngredients]);
+  const orderPrice = useMemo(() => orderIngredients.reduce((acc, item) => item.type === 'bun' ? acc + item.price * 2 : acc + item.price, 0), [orderIngredients]);
 
   return(
       <>
@@ -36,7 +41,7 @@ export default function OrderInfo () {
         </p>
         <p className="text text_type_main-medium pl-10 pt-15 pb-6">Состав:</p>
         <div className={styles.ingredients}>
-        {orderIngredients.map((item, pos) =>
+        {filderedOrderIngredients.map((item, pos) =>
          ( <div className={`${styles.ingredient} pb-4`} key={pos}>
             <div className={styles.image_container} >
               <div className={styles.image_container2}><img className={styles.image} src={item.image_mobile} alt={item.name}/></div>
@@ -44,7 +49,7 @@ export default function OrderInfo () {
             <h2 className={`text text_type_main-default pl-4 pr-4 ${styles.ingredient_title}`}>{item.name}</h2>
             <div className={styles.ingredient_price}>
               <p className='text text_type_digits-default pr-2'>
-                {item.type === 'bun' ? `2 x ${item.price}` : `1 x ${item.price}`}
+                {item.type === 'bun' ? `${countIngredients(item) * 2} x ${item.price}` : `${countIngredients(item)} x ${item.price}`}
               </p>
               <CurrencyIcon type="primary" />
             </div>

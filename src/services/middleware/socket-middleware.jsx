@@ -2,71 +2,39 @@ import { getCookie } from "../../utils/cookie";
 
 export const socketMiddleware = (wsUrl, wsActions) => {
   return store => {
-    let socketFeed = null;
-    let socketOrders = null;
+    let socket = null;
 
     return next => action => {
-      const { dispatch, getState } = store;
-      const { type } = action;
-      const { wsFeed, wsOrders, wsEnd, onOpen, onClose, onError, onOrders, onUserOrders } = wsActions;
-      const { authorization } = getState().auth;
-      const accessToken = getCookie('accessToken');
+      const { dispatch } = store;
+      const { type, payload } = action;
+      const { wsInit, wsEnd, onOpen, onClose, onError, onMessage } = wsActions;
 
-      if (type === wsFeed) {
-        socketFeed = new WebSocket(`${wsUrl}/all`);
+      if (type === wsInit) {
+        socket = new WebSocket(`${wsUrl}${payload}`);
       };
 
-      if (type === wsOrders && authorization.user) {
-        socketOrders = new WebSocket(`${wsUrl}?token=${accessToken}`);
-      };
-
-      if (socketFeed) {
-        socketFeed.onopen = event => {
+      if (socket) {
+        socket.onopen = event => {
           dispatch({ type: onOpen, payload: event });
         };
 
-        socketFeed.onerror = event => {
+        socket.onerror = event => {
           dispatch({ type: onError, payload: event });
         };
 
-        socketFeed.onmessage = event => {
+        socket.onmessage = event => {
           const { data } = event;
           const parsedData = JSON.parse(data);
-          dispatch({ type: onOrders, payload: parsedData });
+          dispatch({ type: onMessage, payload: parsedData });
         };
 
-        socketFeed.onclose = event => {
+        socket.onclose = event => {
           dispatch({ type: onClose, payload: event });
         };
 
         if (type === wsEnd) {
-          socketFeed.close(1000);
+          socket.close(1000);
         };
-      };
-
-      if (socketOrders) {
-        socketOrders.onopen = event => {
-          dispatch({ type: onOpen, payload: event });
-        };
-
-        socketOrders.onerror = event => {
-          dispatch({ type: onError, payload: event });
-        };
-
-        socketOrders.onmessage = event => {
-          const { data } = event;
-          const parsedData = JSON.parse(data);
-          dispatch({ type: onUserOrders, payload: parsedData });
-        };
-
-        socketOrders.onclose = event => {
-          dispatch({ type: onClose, payload: event });
-        };
-
-        if (type === wsEnd) {
-          socketOrders.close(1000);
-        };
-
       };
 
       next(action);
