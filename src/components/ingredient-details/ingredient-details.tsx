@@ -1,7 +1,5 @@
 import React, { FC } from "react";
-import PropTypes from 'prop-types';
 import ingredient from "./ingredient-details.module.css"
-import ingredientType from "../../utils/type";
 import { useSelector } from "../../services/hooks";
 import { useParams } from "react-router-dom";
 
@@ -40,5 +38,4 @@ import { useParams } from "react-router-dom";
 
 export default IngredientDetails;
 
-// IngredientDetails.propTypes =  ingredientType.isRequired;
 

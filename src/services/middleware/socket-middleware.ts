@@ -1,8 +1,9 @@
 import { Middleware, MiddlewareAPI } from "redux";
 import { TSocketMiddlewareActions, TWsConnectionStartEnd } from "../actions/websocket";
+import { AppDispatch, RootState } from "../types";
 
 export const socketMiddleware = (wsUrl: string, wsActions: TSocketMiddlewareActions): Middleware => {
-  return (store: MiddlewareAPI) => {
+  return (store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
 
     return next => (action: TWsConnectionStartEnd)=> {

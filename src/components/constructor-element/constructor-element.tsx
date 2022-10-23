@@ -1,9 +1,7 @@
 import React, { FC, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import burger from './constructor-element.module.css'
-import ingredientType from '../../utils/type';
 import { useDispatch } from '../../services/hooks';
 import { DELET_INGREDIENT, MOVE_CARD } from '../../services/actions/ingredients';
 import { useDrag, useDrop } from "react-dnd";
@@ -85,10 +83,5 @@ const ElementConstructor: FC<{ingredient: TIngredient; index: number}> = ({ ingr
 };
 
 export default ElementConstructor;
-
-// ElementConstructor.propTypes =  {
-//   ingredient: ingredientType.isRequired,
-//   index: PropTypes.number
-// }
 
 

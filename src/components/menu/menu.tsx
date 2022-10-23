@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import menu from './menu.module.css'
 
@@ -19,12 +18,6 @@ const Menu: FC<{current: string; setTab: (value: string) => void}> = ({ current,
     </div>
   )
 };
-
-// Menu.propTypes =  {
-//   tab1: PropTypes.string,
-//   tab2: PropTypes.string,
-//   tab3: PropTypes.string,
-// }
 
 
 export default Menu;

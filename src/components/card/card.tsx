@@ -1,9 +1,7 @@
 import React, { FC } from 'react';
-import PropTypes from 'prop-types';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import card from './card.module.css'
-import ingredientType from '../../utils/type';
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from 'react-router-dom'
 import { TIngredient, TLocation } from '../../services/types/data';
@@ -35,7 +33,5 @@ const Card: FC<{item: TIngredient}> = ({ item }) => {
   );
 };
 
-
-// Card.propTypes =  ingredientType.isRequired
 
 export default Card;

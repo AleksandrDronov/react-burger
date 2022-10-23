@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, FC, useCallback } from 'react';
+import React, { FC, useCallback, FormEvent } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect } from 'react-router-dom';
 import styles from './login.module.css';
@@ -13,7 +13,7 @@ const ForgotPasswordPage: FC = () => {
   const { values, handleChange } = useForm({ email: '' });
 
   const reset = useCallback(
-    (e: SyntheticEvent) => {
+    (e: FormEvent) => {
       e.preventDefault();
       dispatch(resetPasswordRequest(values));
     },

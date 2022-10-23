@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import order from "./order-details.module.css";
-import PropTypes from 'prop-types';
 import { TOrderDetails } from "../../services/types/data";
 
 export const OrderDetails: FC<TOrderDetails> = (props) => {
@@ -19,9 +18,3 @@ export const OrderDetails: FC<TOrderDetails> = (props) => {
     </>
   )
 };
-
-// OrderDetails.propTypes =  {
-//   name: PropTypes.string.isRequired,
-//   order: PropTypes.object.isRequired,
-//   success: PropTypes.bool
-// }

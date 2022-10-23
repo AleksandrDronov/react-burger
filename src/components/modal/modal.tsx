@@ -1,6 +1,5 @@
 import React, { FC, ReactNode } from "react";
 import ReactDOM from "react-dom";
-import PropTypes from 'prop-types';
 import modal from './modal.module.css'
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
@@ -36,9 +35,5 @@ const Modal: FC<{children: ReactNode; onClose: () => void}> = (props) => {
   );
 };
 
-// Modal.propTypes = {
-//   children: PropTypes.node,
-//   onClose: PropTypes.func
-// }
 
 export default Modal;

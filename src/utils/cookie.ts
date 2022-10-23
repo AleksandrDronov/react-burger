@@ -29,7 +29,6 @@ export function setCookie(name: string, value: string , props?: any) {
     }
   }
   document.cookie = updatedCookie;
-  console.log(document.cookie)
 }
 
 export function deleteCookie(name: string) {

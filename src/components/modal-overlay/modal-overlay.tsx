@@ -1,5 +1,4 @@
 import React, { FC, ReactNode, SyntheticEvent } from "react";
-import PropTypes from 'prop-types';
 import overlay from './modal-overlay.module.css'
 
 
@@ -16,9 +15,5 @@ const ModalOverlay: FC<{children: ReactNode; close: () => void}> = (props) => {
   )
 }
 
-// ModalOverlay.propTypes = {
-//   children: PropTypes.node,
-//   close: PropTypes.func
-// }
 
 export default ModalOverlay;
