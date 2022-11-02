@@ -25,12 +25,11 @@
 .active_nav_link {
   color: #F2F2F3;
 }
+
 .nav_list {
-  composes: nav_burger;
   padding: 0 130px 0 20px;
 }
 
 .nav_account {
-  composes: nav_list;
   padding: 0 20px 0 310px;
 }
