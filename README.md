@@ -4,5 +4,6 @@
 
 ### Используемые технологии:
 1. ReactJS
-2. Redux
-3. React DnD
+2. TypeScript
+3. Redux
+4. React DnD
