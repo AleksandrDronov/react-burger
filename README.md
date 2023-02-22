@@ -12,11 +12,11 @@
 
 1. Клонировать репозиторий.
 
-   git clone git@github.com:AleksandrDronov/algososh.git
+   git clone git@github.com:AleksandrDronov/react-burger.git
 
 2. Войти в папку проекта.
 
-   cd algososh
+   cd react-burger
 
 3. Установить зависимости.
 
