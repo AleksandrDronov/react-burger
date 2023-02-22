@@ -1,4 +1,4 @@
-# Проект: Бургерная
+# Бургерная
 
 [ссылка](https://aleksandrdronov.github.io/react-burger/)
 
