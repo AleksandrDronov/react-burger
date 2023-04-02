@@ -1,4 +1,4 @@
-# Бургерная
+# Бургерная. Сервис для создания и заказа бургеров
 
 [ссылка](https://aleksandrdronov.github.io/react-burger/)
 
